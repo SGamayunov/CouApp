@@ -1,0 +1,59 @@
+﻿@page "/counter"
+@inject DictionaryService dictionary
+@inject StatDataService data
+@inject IJSRuntime js
+@using CouApp.Data
+
+<div class="row">
+    <div class="col-md-2">
+        <RadzenLabel Text="Месяц"></RadzenLabel>
+    </div>
+    <div class="col-md-7">
+        <RadzenDropDown AllowClear="true" TValue="int" 
+                        Data=@dictionary.Months
+                        TextProperty="Name"
+                        ValueProperty="Id"
+                        
+                        SelectedItem="@SelectedMonthId"
+                        Change=@(args => SelectedMonthChanged(args, "sdfsdfs"))
+                        
+                        AllowFiltering="false" />
+        <RadzenLabel Text=@SelectedMonthId.ToString()/>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <RadzenLabel Text="Категория события"></RadzenLabel>
+    </div>
+    <div class="col-md-10" style="width:500px">
+        <RadzenDropDown AllowClear="true" TValue="int" 
+
+                        Data=@dictionary.Categories
+                        TextProperty="Name"
+                        ValueProperty="Id"
+                        
+                        AllowFiltering="true" />
+    </div>
+    <div class="col-md-2">
+        <RadzenButton Text="Запрос"></RadzenButton>
+    </div>
+</div>
+
+<hr />
+
+@foreach (var r in dictionary.Regions)
+{
+    <PpnInfoPanel Title="@r.Name"></PpnInfoPanel>
+}
+
+
+@code {
+    private int SelectedMonthId { get; set; }
+
+    private void SelectedMonthChanged(object value, string str)
+    {
+        js.InvokeVoidAsync("Alert", "SelectChanged" + str);
+    }
+}

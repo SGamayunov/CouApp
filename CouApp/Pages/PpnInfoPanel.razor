@@ -1,0 +1,131 @@
+﻿@using CouApp.Data;
+@using Radzen.Blazor;
+
+
+<div class="card" style="width: 45rem;">
+  
+  <div class="card-body">
+    <h3 class="card-title">@Title</h3>
+    <p class="card-text">
+        <RadzenChart>
+            <div class="row">
+                <div>
+                    <RadzenColumnSeries Data="@MonthData" CategoryProperty="YearStr" Title="Апрель" ValueProperty="Count" />
+                    <RadzenColumnSeries Data="@PreviousMonthData" CategoryProperty="YearStr" Title="Май" LineType="LineType.Dashed" ValueProperty="Count" />
+                    <RadzenColumnSeries Data="@NullStat" CategoryProperty="YearStr" Title=" " LineType="LineType.Dashed" ValueProperty="Count" />
+                    
+                    <RadzenColumnOptions Radius="5" />
+                    <RadzenValueAxis>
+                        <RadzenGridLines Visible="true" />
+                        <RadzenAxisTitle Text="Количество сообщений" />
+                    </RadzenValueAxis>
+                </div>
+            </div>
+        </RadzenChart>
+    </p>
+  </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public MonthStat[] MonthData { get; set; }
+
+    [Parameter]
+    public MonthStat[] PreviousMonthData { get; set; }
+
+    public MonthStat[] NullStat = new MonthStat[]
+    {
+        new MonthStat
+        {
+            Count = 0
+        }
+    };
+
+    public MonthStat[] GetMonthData()
+    {
+        var rnd = new Random();
+        return new MonthStat[]
+            {
+                new MonthStat
+                {
+                    Year = 2017,
+                    Month = "Май",
+                    Count = 100 + rnd.Next(1,20)
+                },
+                new MonthStat
+                {
+                    Year = 2018,
+                    Month = "Май",
+                    Count = 108 + rnd.Next(1,20)
+                },
+                new MonthStat
+                {
+                    Year = 2019,
+                    Month = "Май",
+                    Count = 112 + rnd.Next(1,20)
+                },
+                new MonthStat
+                {
+                    Year = 2020,
+                    Month = "Май",
+                    Count = 115 + rnd.Next(1,20)
+                },
+                new MonthStat
+                {
+                    Year = 2021,
+                    Month = "Май",
+                    Count = 122 + rnd.Next(1,20)
+                }
+            };
+    }
+
+
+    public MonthStat[] GetPreviousMonthData()
+    {
+        var rnd = new Random();
+        return new MonthStat[]
+        {
+            new MonthStat
+            {
+                Year = 2017,
+                Month = "Апрель",
+                Count = 80 + rnd.Next(1,20)
+            },
+            new MonthStat
+            {
+                Year = 2018,
+                Month = "Апрель",
+                Count = 100 + rnd.Next(1,20)
+            },
+            new MonthStat
+            {
+                Year = 2019,
+                Month = "Апрель",
+                Count = 120 + rnd.Next(1,20)
+            },
+            new MonthStat
+            {
+                Year = 2020,
+                Month = "Апрель",
+                Count = 122 + rnd.Next(1,20)
+            },
+            new MonthStat
+            {
+                Year = 2021,
+                Month = "Апрель",
+                Count = 130 + rnd.Next(1,20)
+            }
+        };
+    }
+
+
+
+
+
+
+}

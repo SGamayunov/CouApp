@@ -1,0 +1,93 @@
+﻿@page "/fetchdata"
+
+@using CouApp.Data
+@inject WeatherForecastService ForecastService
+
+    <h1></h1>
+
+    <div class="card">
+        <div class="card-body">
+            <b><h2 style="color:red"> БУРАН - 100</h2></b> Время в пути: <b style="color:red">12:55</b>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <b><h2 style="color:red"> БУРАН - 15</h2></b> Время в пути: <b style="color:red">09:41</b>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <b><h2 style="color:orange"> БУРАН - 55</h2></b> Время в пути: <b style="color:orange">05:38</b>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <b><h2 style="color:orange"> СОГ 12</h2></b> Время в пути: <b style="color:orange">28:55</b>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <b><h2 style="color:black"> УИП АХМЕТОВ</h2></b> Время в пути: <b>02:14</b>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <b><h2 style="color:black"> Буран 115</h2></b> Время в пути: <b>01:05</b>
+        </div>
+    </div>
+    <br />
+
+
+    <h1>Weather forecast</h1>
+    <button style="btn btn-primary" @onclick="RefreshData">Query</button>
+
+    <p>This component demonstrates fetching data from a service.</p>
+
+    @if (forecasts == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Temp. (C)</th>
+                    <th>Temp. (F)</th>
+                    <th>Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var forecast in forecasts)
+                {
+                    <tr>
+                        <td>@forecast.Date.ToShortDateString()</td>
+                        <td>@forecast.TemperatureC</td>
+                        <td>@forecast.TemperatureF</td>
+                        <td>@forecast.Summary</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @code {
+        private WeatherForecast[] forecasts;
+
+        protected override async Task OnInitializedAsync()
+        {
+            //forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        }
+
+        private async Task RefreshData()
+        {
+            forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+
+        }
+    }
